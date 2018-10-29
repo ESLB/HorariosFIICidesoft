@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "562344557400",
+    "firebase_url": "https://apphorariosfii.firebaseio.com",
+    "project_id": "apphorariosfii",
+    "storage_bucket": "apphorariosfii.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:562344557400:android:1b49539758c4c3cb",
+        "android_client_info": {
+          "package_name": "fii.industrial.cidesoft.horariofii"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "562344557400-thq2s0fdst373fr7mcqiuropvaivcpcb.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "fii.industrial.cidesoft.horariofii",
+            "certificate_hash": "3751063ca9ade709df639567276e6d1239f7b63f"
+          }
+        },
+        {
+          "client_id": "562344557400-40g9g9hb4jnq86go9rsd7q5jgv1c5mqt.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA5QA9qgANHRGRIicMi2wYEc9mMp6zRans"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "562344557400-40g9g9hb4jnq86go9rsd7q5jgv1c5mqt.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
