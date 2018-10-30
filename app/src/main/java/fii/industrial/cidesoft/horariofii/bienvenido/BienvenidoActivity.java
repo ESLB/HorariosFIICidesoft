@@ -11,7 +11,7 @@ import com.google.firebase.analytics.FirebaseAnalytics;
 
 import fii.industrial.cidesoft.horariofii.R;
 
-public class BienvenidoActivity extends AppCompatActivity implements BienvenidoContract.View{
+public class BienvenidoActivity extends AppCompatActivity {
 
     private ImageView Logo;
     private Button BotonEntrar;
@@ -38,9 +38,4 @@ public class BienvenidoActivity extends AppCompatActivity implements BienvenidoC
     }
 
 
-
-    @Override
-    public void setPresenter(BienvenidoContract.Presenter presenter) {
-
-    }
 }
