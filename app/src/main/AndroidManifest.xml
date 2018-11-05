@@ -16,6 +16,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".pruebas.PruebasFirebase"></activity>
+        <activity android:name=".bienvenido.loginActivity"></activity>
+        <activity android:name=".acercaDe.planillaH"></activity>
+        <activity android:name=".escogerEscuela.EscogerEscuela"></activity>
+        <activity android:name=".escogerCiclo.Ciclos"></activity>
     </application>
 
 </manifest>

@@ -1,3 +1,21 @@
 <resources>
-    <string name="app_name">HorarioFII</string>
+    <string name="app_name">Horarios FII</string>
+    <string name="contenido_h">HORARIOS FII es un proyecto de investigación de CIDESOFT que tiene por objetivo facilitar a los estudiantes de la Facultad de Ingeniería Industrial encontrar el salon en donde tendran clases y evaluar como esto influye en su desempeño academico.
+    Gracias por ser parte de este proyecto acádemico.
+     \n
+    Desarrollado en CIDESOFT por:  </string>
+    <string name="contenido_integrantes">
+    -Alfredo Azañero\n
+    -Andre Leon\n
+    -David Valverde\n
+    -Diego Trujillo\n
+    -Eduardo Lévano\n
+    -Joan P. Ancajima\n
+    -Lesly Vera\n
+    -Ruben Bungele\n
+        -Yuri Fernández</string>
+    <string name="texto_curso">Curso</string>
+    <string name="texto_profesor">Profesor</string>
+
+
 </resources>

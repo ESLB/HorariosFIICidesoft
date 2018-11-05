@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".acercaDe.planillaH">
+<ScrollView
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#f3f6fb"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/imagen_acercade"
+            android:layout_width="wrap_content"
+            android:layout_height="134dp"
+            android:src="@drawable/cidesoft" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/contenido_h"
+            android:textAlignment="center"
+            android:textColor="@android:color/black"
+            android:textSize="17sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+
+            android:layout_marginTop="10dp"
+            android:text="@string/contenido_integrantes"
+            android:textAlignment="gravity"
+            android:textColor="@android:color/black"
+            android:textSize="17sp" />
+    </LinearLayout>
+</ScrollView>
+</android.support.constraint.ConstraintLayout>
