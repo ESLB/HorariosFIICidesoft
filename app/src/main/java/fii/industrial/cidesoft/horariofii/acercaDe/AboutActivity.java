@@ -8,14 +8,14 @@ import android.widget.ImageView;
 import es.dmoral.toasty.Toasty;
 import fii.industrial.cidesoft.horariofii.R;
 
-public class planillaH extends AppCompatActivity {
+public class AboutActivity extends AppCompatActivity {
 
     private ImageView Yuri;
     private int contador = 0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_planilla_h);
+        setContentView(R.layout.activity_about);
 
         Yuri = (ImageView) findViewById(R.id.imagen_acercade);
         Yuri.setOnClickListener(new View.OnClickListener() {
@@ -23,7 +23,7 @@ public class planillaH extends AppCompatActivity {
             public void onClick(View v) {
                 contador++;
                 if(contador>2){
-                    Toasty.success(planillaH.this, "Yuri Fernández").show();
+                    Toasty.success(AboutActivity.this, "Yuri Fernández").show();
                 }
 
             }

@@ -12,7 +12,7 @@ import android.widget.TextView;
 import fii.industrial.cidesoft.horariofii.R;
 import fii.industrial.cidesoft.horariofii.model.Curso;
 
-public class PantallaE extends AppCompatActivity {
+public class PickActivity extends AppCompatActivity {
 
     private TextView textView_curso;
     private TextView textView_Profesor;

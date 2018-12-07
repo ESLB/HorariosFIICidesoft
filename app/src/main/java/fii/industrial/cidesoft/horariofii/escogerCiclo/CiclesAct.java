@@ -5,7 +5,7 @@ import android.os.Bundle;
 
 import fii.industrial.cidesoft.horariofii.R;
 
-public class Ciclos extends AppCompatActivity {
+public class CiclesAct extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

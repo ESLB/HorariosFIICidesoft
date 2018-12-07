@@ -4,5 +4,7 @@
     <color name="colorPrimaryDark">#FFA000</color>
     <color name="colorAccent">#FF5722</color>
     <color name="colorText">#212121</color>
+
+    <color name="item_curso">#f7971a</color>
     #212121
 </resources>

@@ -1,4 +1,4 @@
-package fii.industrial.cidesoft.horariofii.bienvenido;
+package fii.industrial.cidesoft.horariofii.login;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -9,8 +9,8 @@ import android.widget.ImageView;
 
 import es.dmoral.toasty.Toasty;
 import fii.industrial.cidesoft.horariofii.R;
-import fii.industrial.cidesoft.horariofii.acercaDe.planillaH;
-import fii.industrial.cidesoft.horariofii.escogerEscuela.EscogerEscuela;
+import fii.industrial.cidesoft.horariofii.acercaDe.AboutActivity;
+import fii.industrial.cidesoft.horariofii.escogerEscuela.SchoolAct;
 
 public class loginActivity extends AppCompatActivity {
 
@@ -30,16 +30,14 @@ public class loginActivity extends AppCompatActivity {
         AcercaDe.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(loginActivity.this, planillaH.class);
-                startActivity(i);
+                IrActivity("about");
             }
         });
 
         Ingresar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(loginActivity.this, EscogerEscuela.class);
-                startActivity(i);
+                validarDatos();
             }
         });
 
@@ -47,11 +45,44 @@ public class loginActivity extends AppCompatActivity {
         LogoFII.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                contador++;
-                if(contador>2){
-                    Toasty.success(loginActivity.this, "Andre León").show();
-                }
+               LlamarCreador();
             }
         });
     }
+
+    private void IrActivity(String act) {
+            Intent i = null;
+        switch (act){
+            case "about":
+                i = new Intent(loginActivity.this, AboutActivity.class);
+                break;
+            case "school":
+                i = new Intent(loginActivity.this, SchoolAct.class);
+                break;
+            case "registrarNombre":
+                break;
+        }
+        if(i!=null)
+        startActivity(i);
+
+    }
+
+    private void validarDatos() {
+        boolean firstTime = false;
+        if(firstTime){
+            IrActivity("registrarNombre");
+        } else{
+
+        }
+
+    }
+
+    private void LlamarCreador() {
+        contador++;
+        if(contador>2){
+            Toasty.success(loginActivity.this, "Andre León").show();
+        }
+    }
+
+
 }

@@ -9,9 +9,9 @@ import android.widget.LinearLayout;
 
 import es.dmoral.toasty.Toasty;
 import fii.industrial.cidesoft.horariofii.R;
-import fii.industrial.cidesoft.horariofii.escogerCiclo.Ciclos;
+import fii.industrial.cidesoft.horariofii.escogerCiclo.CiclesAct;
 
-public class EscogerEscuela extends AppCompatActivity {
+public class SchoolAct extends AppCompatActivity {
 
     private LinearLayout Fondo;
     private int Contador = 0;
@@ -19,13 +19,13 @@ public class EscogerEscuela extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_escuela);
         Button boton = (Button) findViewById(R.id.button);
 
         boton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent (v.getContext(),Ciclos.class);
+                Intent intent = new Intent (v.getContext(),CiclesAct.class);
                         startActivityForResult(intent,0);
             }
         });
@@ -33,7 +33,7 @@ public class EscogerEscuela extends AppCompatActivity {
         botonn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent (v.getContext(),Ciclos.class);
+                Intent intent = new Intent (v.getContext(),CiclesAct.class);
                 startActivityForResult(intent,0);
             }
         });
@@ -41,7 +41,7 @@ public class EscogerEscuela extends AppCompatActivity {
         bot.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent (v.getContext(),Ciclos.class);
+                Intent intent = new Intent (v.getContext(),CiclesAct.class);
                 startActivityForResult(intent,0);
             }
         });
@@ -52,7 +52,7 @@ public class EscogerEscuela extends AppCompatActivity {
             public void onClick(View v) {
                 Contador++;
                 if(Contador>3){
-                    Toasty.success(EscogerEscuela.this, "Lesly Vera").show();
+                    Toasty.success(SchoolAct.this, "Lesly Vera").show();
                 }
             }
         });

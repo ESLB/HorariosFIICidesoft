@@ -11,9 +11,10 @@ import android.widget.Toast;
 import com.google.firebase.analytics.FirebaseAnalytics;
 
 import fii.industrial.cidesoft.horariofii.R;
+import fii.industrial.cidesoft.horariofii.login.loginActivity;
 import fii.industrial.cidesoft.horariofii.pruebas.PruebasFirebase;
 
-public class BienvenidoActivity extends AppCompatActivity {
+public class TempwelcomeActivity extends AppCompatActivity {
 
     private ImageView Logo;
     private Button BotonEntrar;
@@ -36,7 +37,7 @@ public class BienvenidoActivity extends AppCompatActivity {
                 Bundle params = new Bundle();
                 params.putString("Usuario", "16170057");
                 mFirebaseAnalytics.logEvent("entro_app", params);
-                Toast.makeText(BienvenidoActivity.this, "Click", Toast.LENGTH_SHORT).show();
+                Toast.makeText(TempwelcomeActivity.this, "Click", Toast.LENGTH_SHORT).show();
 
             }
         });
@@ -45,7 +46,7 @@ public class BienvenidoActivity extends AppCompatActivity {
         AcercaDe.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(BienvenidoActivity.this, PruebasFirebase.class);
+                Intent i = new Intent(TempwelcomeActivity.this, PruebasFirebase.class);
                 startActivity(i);
             }
         });
@@ -54,7 +55,7 @@ public class BienvenidoActivity extends AppCompatActivity {
         Pantalla.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(BienvenidoActivity.this, loginActivity.class);
+                Intent i = new Intent(TempwelcomeActivity.this, loginActivity.class);
                 startActivity(i);
             }
         });

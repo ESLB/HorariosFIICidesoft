@@ -4,23 +4,24 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/logo"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".bienvenido.BienvenidoActivity">
+        <activity android:name=".bienvenido.TempwelcomeActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".pruebas.PruebasFirebase"></activity>
-        <activity android:name=".bienvenido.loginActivity"></activity>
-        <activity android:name=".acercaDe.planillaH"></activity>
-        <activity android:name=".escogerEscuela.EscogerEscuela"></activity>
-        <activity android:name=".escogerCiclo.Ciclos"></activity>
+        <activity android:name=".pruebas.PruebasFirebase" />
+        <activity android:name=".login.loginActivity" />
+        <activity android:name=".acercaDe.AboutActivity" />
+        <activity android:name=".escogerEscuela.SchoolAct" />
+        <activity android:name=".escogerCiclo.CiclesAct" />
+        <activity android:name=".resumenCursos.ResumenAct"></activity>
     </application>
 
 </manifest>
