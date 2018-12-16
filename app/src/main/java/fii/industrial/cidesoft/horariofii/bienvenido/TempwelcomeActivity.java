@@ -10,37 +10,23 @@ import android.widget.Toast;
 
 import com.google.firebase.analytics.FirebaseAnalytics;
 
+
 import fii.industrial.cidesoft.horariofii.R;
-import fii.industrial.cidesoft.horariofii.login.loginActivity;
+import fii.industrial.cidesoft.horariofii.login_1.loginActivity;
 import fii.industrial.cidesoft.horariofii.pruebas.PruebasFirebase;
+import fii.industrial.cidesoft.horariofii.pruebas.TestHorarios;
 
 public class TempwelcomeActivity extends AppCompatActivity {
 
     private ImageView Logo;
-    private Button BotonEntrar;
     private Button AcercaDe;
     private Button Pantalla;
-
-    private FirebaseAnalytics mFirebaseAnalytics;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.bienvenido_act);
-        mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
-
-        BotonEntrar = (Button) findViewById(R.id.btn_entrar);
-        BotonEntrar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Bundle params = new Bundle();
-                params.putString("Usuario", "16170057");
-                mFirebaseAnalytics.logEvent("entro_app", params);
-                Toast.makeText(TempwelcomeActivity.this, "Click", Toast.LENGTH_SHORT).show();
-
-            }
-        });
 
         AcercaDe = (Button) findViewById(R.id.btn_acercaDe);
         AcercaDe.setOnClickListener(new View.OnClickListener() {
@@ -48,6 +34,16 @@ public class TempwelcomeActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent i = new Intent(TempwelcomeActivity.this, PruebasFirebase.class);
                 startActivity(i);
+            }
+
+        });
+
+        AcercaDe.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                Intent i = new Intent(TempwelcomeActivity.this, TestHorarios.class);
+                startActivity(i);
+                return true;
             }
         });
 

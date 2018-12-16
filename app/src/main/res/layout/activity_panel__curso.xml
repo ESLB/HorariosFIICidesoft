@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Panel_Curso">
+    tools:context=".cursosLista_3.Panel_Curso">
 
     <Button
         android:id="@+id/btn_cursos"

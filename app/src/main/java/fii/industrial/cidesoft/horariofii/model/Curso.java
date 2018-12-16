@@ -5,7 +5,7 @@ public class Curso {
     private String curso;
     private String profesor;
     private String[] seccion;
-    private boolean check_estado_curso;
+    private boolean check_estado_curso = false;
 
     public String getCurso() {
 
@@ -31,4 +31,5 @@ public class Curso {
     public void setCheck_estado_curso(boolean check_estado_curso) {
         this.check_estado_curso = check_estado_curso;
     }
+
 }

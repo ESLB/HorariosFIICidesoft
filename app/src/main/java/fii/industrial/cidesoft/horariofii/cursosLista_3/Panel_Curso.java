@@ -1,4 +1,4 @@
-package fii.industrial.cidesoft.horariofii.cursosLista;
+package fii.industrial.cidesoft.horariofii.cursosLista_3;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;

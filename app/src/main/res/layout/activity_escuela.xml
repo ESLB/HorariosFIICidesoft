@@ -1,49 +1,71 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <LinearLayout
+    <android.support.constraint.ConstraintLayout
         android:id="@+id/linearLayout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@drawable/eeeeeee"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/fondo"
         android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="parent"/>
-
-    <Button
-        android:id="@+id/button3"
-        android:layout_width="285dp"
-
-        android:layout_height="58dp"
-        android:layout_marginEnd="48dp"
-        android:layout_marginBottom="140dp"
-        android:text="INGENIERÍA DE SEGURIDAD"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
-
-    <Button
-        android:id="@+id/button"
-        android:layout_width="277dp"
-        android:layout_height="65dp"
-        android:layout_marginEnd="48dp"
-        android:layout_marginBottom="356dp"
-        android:text="INGENIERÍA INDUSTRIAL"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout"
-        app:layout_constraintVertical_bias="0.979" />
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0">
 
-    <Button
-        android:id="@+id/button2"
-        android:layout_width="284dp"
-        android:layout_height="77dp"
-        android:layout_marginEnd="48dp"
-        android:layout_marginBottom="232dp"
-        android:text="INGENIERÍA TEXTIL Y CONFECCIONES"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
 
-</android.support.constraint.ConstraintLayout>
+        <Button
+            android:id="@+id/btn_seguridad"
+            android:layout_width="match_parent"
+
+            android:layout_height="58dp"
+            android:layout_marginTop="24dp"
+            android:text="INGENIERÍA DE SEGURIDAD"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/linearLayout"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btn_textil" />
+
+        <Button
+            android:id="@+id/btn_textil"
+            android:layout_width="284dp"
+            android:layout_height="77dp"
+            android:text="INGENIERÍA TEXTIL Y CONFECCIONES"
+            app:layout_constraintBottom_toTopOf="@+id/linearLayout"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
+
+        <Button
+            android:id="@+id/btn_industrial"
+            android:layout_width="match_parent"
+            android:layout_height="65dp"
+            android:layout_marginBottom="24dp"
+            android:layout_marginStart="4dp"
+            android:text="INGENIERÍA INDUSTRIAL"
+            app:layout_constraintBottom_toTopOf="@+id/btn_textil"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <ProgressBar
+            android:id="@+id/prog_escuela"
+            style="?android:attr/progressBarStyle"
+            android:layout_width="102dp"
+            android:layout_height="112dp"
+            android:layout_marginBottom="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </android.support.constraint.ConstraintLayout>
+
+</LinearLayout>

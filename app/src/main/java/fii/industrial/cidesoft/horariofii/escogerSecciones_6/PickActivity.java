@@ -1,4 +1,4 @@
-package fii.industrial.cidesoft.horariofii.escogerSecciones;
+package fii.industrial.cidesoft.horariofii.escogerSecciones_6;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;

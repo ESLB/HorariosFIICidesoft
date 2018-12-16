@@ -1,6 +1,7 @@
 package fii.industrial.cidesoft.horariofii.model;
 
 public class CursoS {
+
     private String Nombre_Cruso;
     private String Profesor;
     private String Seccion;
