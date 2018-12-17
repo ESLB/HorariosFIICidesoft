@@ -20,7 +20,7 @@
 
 
         <Button
-            android:id="@+id/btn_seguridad"
+            android:id="@+id/btn_ciclo_3"
             android:layout_width="match_parent"
 
             android:layout_height="58dp"
@@ -30,10 +30,10 @@
             app:layout_constraintEnd_toStartOf="@+id/linearLayout"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/btn_textil" />
+            app:layout_constraintTop_toBottomOf="@+id/btn_ciclo_2" />
 
         <Button
-            android:id="@+id/btn_textil"
+            android:id="@+id/btn_ciclo_2"
             android:layout_width="284dp"
             android:layout_height="77dp"
             android:text="INGENIERÍA TEXTIL Y CONFECCIONES"
@@ -44,13 +44,13 @@
             app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
 
         <Button
-            android:id="@+id/btn_industrial"
+            android:id="@+id/btn_ciclo_1"
             android:layout_width="match_parent"
             android:layout_height="65dp"
             android:layout_marginBottom="24dp"
             android:layout_marginStart="4dp"
             android:text="INGENIERÍA INDUSTRIAL"
-            app:layout_constraintBottom_toTopOf="@+id/btn_textil"
+            app:layout_constraintBottom_toTopOf="@+id/btn_ciclo_2"
             app:layout_constraintStart_toStartOf="parent" />
 
         <ProgressBar

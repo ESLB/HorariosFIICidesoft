@@ -7,8 +7,14 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
+import es.dmoral.toasty.Toasty;
 import fii.industrial.cidesoft.horariofii.R;
 import fii.industrial.cidesoft.horariofii.escogerEscuela_4.SchoolAct;
+import fii.industrial.cidesoft.horariofii.model.SingletonFII;
 
 import static fii.industrial.cidesoft.horariofii.utils.stringVerifier.ValidString;
 
@@ -16,11 +22,14 @@ public class NombreActivity extends AppCompatActivity {
 
     private Button Aceptar;
     private EditText Nombre;
+    private SingletonFII mSingletonFII;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_nombre);
+
+        mSingletonFII = SingletonFII.getSingletonFII(getApplicationContext());
 
         Aceptar = (Button) findViewById(R.id.btn_aceptar);
         Nombre = (EditText) findViewById(R.id.edit_nombre);
@@ -32,7 +41,7 @@ public class NombreActivity extends AppCompatActivity {
                 if(ValidString(dato)){
                     CrearUsuario(dato);
                 }else{
-                    //String invalidad, toast
+                    Toasty.info(NombreActivity.this,"Ingrese un nombre").show();
                 }
 
             }
@@ -43,9 +52,16 @@ public class NombreActivity extends AppCompatActivity {
 
     private void CrearUsuario(String nombreCompleto){
 
-        //OnSuccess
-        PasarACursos();
-        //else, notificar error
+        mSingletonFII.getUsuario().setNombre(nombreCompleto);
+        mSingletonFII.getUsuario().setContador(1);
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference myRef = database.getReference("usuarios").child(mSingletonFII.getUsuario().getCodigo());
+        myRef.setValue(mSingletonFII.getUsuario()).addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+                PasarACursos();
+            }
+        });
 
     }
 

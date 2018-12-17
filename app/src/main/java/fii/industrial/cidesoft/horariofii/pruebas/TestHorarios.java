@@ -49,10 +49,11 @@ public class TestHorarios extends AppCompatActivity {
                 ArrayList<String> horarios = new ArrayList<String>(); horarios.add("Horaroios");horarios.add("horarios");
                 ArrayList<String> profesores = new ArrayList<String>();profesores.add("profesores");profesores.add("Profesores");
                 ArrayList<String>salones = new ArrayList<String>();salones.add("salones");salones.add("salones");
-                Horarios.add(new Horario("id", "nombre", horarios, profesores, salones, "Ciclo 1", "Industrial"));
-                Horarios.add(new Horario("id", "nombre", horarios, profesores, salones, "Ciclo 1", "Industrial"));
-                Horarios.add(new Horario("id", "nombre", horarios, profesores, salones, "Ciclo 1", "Industrial"));
-                Horarios.add(new Horario("id", "nombre", horarios, profesores, salones, "Ciclo 1", "Industrial"));
+                ArrayList<String>secciones = new ArrayList<String>();salones.add("secciones");salones.add("secciones");
+                Horarios.add(new Horario("id", "nombre", horarios, profesores, salones, "Ciclo 1", "Industrial", secciones));
+                Horarios.add(new Horario("id", "nombre", horarios, profesores, salones, "Ciclo 1", "Industrial", secciones));
+                Horarios.add(new Horario("id", "nombre", horarios, profesores, salones, "Ciclo 1", "Industrial", secciones));
+                Horarios.add(new Horario("id", "nombre", horarios, profesores, salones, "Ciclo 1", "Industrial", secciones));
                 myRef.setValue(Horarios);
             }
         });

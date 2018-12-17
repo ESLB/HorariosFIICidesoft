@@ -1,20 +1,33 @@
 package fii.industrial.cidesoft.horariofii.login_1;
 
 import android.content.Intent;
+import android.support.annotation.NonNull;
 import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.Toast;
+
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
 
 import es.dmoral.toasty.Toasty;
 import fii.industrial.cidesoft.horariofii.R;
 import fii.industrial.cidesoft.horariofii.acercaDe_9.AboutActivity;
 import fii.industrial.cidesoft.horariofii.cursosLista_3.Panel_Curso;
 import fii.industrial.cidesoft.horariofii.escogerEscuela_4.SchoolAct;
-import fii.industrial.cidesoft.horariofii.escogerSecciones_6.PickActivity;
+import fii.industrial.cidesoft.horariofii.model.SingletonFII;
+import fii.industrial.cidesoft.horariofii.model.Usuario;
 import fii.industrial.cidesoft.horariofii.nombre_2.NombreActivity;
+
+import static fii.industrial.cidesoft.horariofii.utils.stringVerifier.ValidString;
 
 public class loginActivity extends AppCompatActivity {
 
@@ -23,15 +36,17 @@ public class loginActivity extends AppCompatActivity {
     private ImageView LogoFII;
     private TextInputEditText Codigo;
     private int contador = 0;
-
+    private SingletonFII mSingletonFII;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        AcercaDe = (Button) findViewById(R.id.btn_acercaDe_login);
+        mSingletonFII = SingletonFII.getSingletonFII(getApplicationContext());
+
         Ingresar = (Button) findViewById(R.id.btn_ingresar_login);
+        AcercaDe = (Button) findViewById(R.id.btn_acercaDe_login);
         Codigo = (TextInputEditText) findViewById(R.id.txt_codigo);
 
         AcercaDe.setOnClickListener(new View.OnClickListener() {
@@ -44,7 +59,13 @@ public class loginActivity extends AppCompatActivity {
         Ingresar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                validarDatos();
+                String codigo = Codigo.getText().toString();
+                if(ValidString(codigo)){
+                    validarDatos(codigo);
+                } else {
+                    Toasty.info(loginActivity.this, "Ingrese un código").show();
+                }
+
             }
         });
 
@@ -67,7 +88,7 @@ public class loginActivity extends AppCompatActivity {
                 i = new Intent(loginActivity.this, SchoolAct.class);
                 break;
             case "horariofinal":
-                i = new Intent(loginActivity.this, PickActivity.class);
+                i = new Intent(loginActivity.this, Panel_Curso.class);
                 break;
             case "registrarNombre":
                 i = new Intent(loginActivity.this, NombreActivity.class);
@@ -78,14 +99,44 @@ public class loginActivity extends AppCompatActivity {
 
     }
 
-    private void validarDatos() {
+    private void validarDatos(String codigo) {
+        final String codigoN = codigo;
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        final DatabaseReference myRef = database.getReference("usuarios").child(codigo);
+        myRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                Usuario usuario = dataSnapshot.getValue(Usuario.class);
+                if(usuario == null){
+                    Usuario usuarioN = new Usuario();
+                    ArrayList<String> indexes = new ArrayList<>();
+                    usuarioN.setContador(0);
+                    usuarioN.setCodigo(codigoN);
+                    usuarioN.setNombre("");
+                    usuarioN.setIndexes(indexes);
+                    mSingletonFII.setUsuario(usuarioN);
+                    IrActivity("registrarNombre");
+                    myRef.removeEventListener(this);
+                }
+                else{
+                    mSingletonFII.setUsuario(usuario);
+                    IrActivity("horariofinal");
+                    myRef.removeEventListener(this);
+                }
+            }
 
-        boolean firstTime = Codigo.getText().toString().length()==0;
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Toast.makeText(loginActivity.this, "Salió mal, intente de nuevo más tarde", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        /*boolean firstTime = Codigo.getText().toString().length()==0;
         if(firstTime){
             IrActivity("registrarNombre");
         } else{
             IrActivity("horariofinal");
-        }
+        }*/
     }
 
     private void LlamarCreador() {

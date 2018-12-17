@@ -14,6 +14,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
+
 import fii.industrial.cidesoft.horariofii.R;
 import fii.industrial.cidesoft.horariofii.model.Usuario;
 
@@ -69,8 +71,8 @@ public class PruebasFirebase extends AppCompatActivity {
                     myRef.removeEventListener(this);
                 }
                 else{
-                    myRef.removeEventListener(this);
                     Toast.makeText(PruebasFirebase.this, usuario.getNombre() + " 2", Toast.LENGTH_SHORT).show();
+                    myRef.removeEventListener(this);
                 }
             }
 
@@ -83,11 +85,15 @@ public class PruebasFirebase extends AppCompatActivity {
     }
 
     private void crearUsuario(String codigo, String nombre) {
-
+        ArrayList<String> indexes = new ArrayList<String>();
+        indexes.add("1-0");
+        indexes.add("1-1");
+        indexes.add("0-1");
+        indexes.add("0-2");
         Usuario usuario = new Usuario();
         usuario.setCodigo(codigo);
         usuario.setContador(1);
-        usuario.setCursos("");
+        usuario.setIndexes(indexes);
         usuario.setNombre(nombre);
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference myRef = database.getReference("usuarios").child(codigo);

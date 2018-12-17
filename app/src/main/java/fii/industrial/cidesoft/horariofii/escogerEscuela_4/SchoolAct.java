@@ -7,10 +7,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 
-import com.google.android.gms.common.api.Api;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -43,9 +41,9 @@ public class SchoolAct extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_escuela);
-        industrial = (Button) findViewById(R.id.btn_industrial);
-        seguridad= (Button) findViewById(R.id.btn_seguridad);
-        textil = (Button) findViewById(R.id.btn_textil);
+        industrial = (Button) findViewById(R.id.btn_ciclo_1);
+        seguridad= (Button) findViewById(R.id.btn_ciclo_3);
+        textil = (Button) findViewById(R.id.btn_ciclo_2);
         mSingletonFII = SingletonFII.getSingletonFII(getApplicationContext());
         progressBar = (ProgressBar) findViewById(R.id.prog_escuela);
         industrial.setVisibility(View.INVISIBLE);

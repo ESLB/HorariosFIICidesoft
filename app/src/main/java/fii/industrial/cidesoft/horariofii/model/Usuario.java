@@ -1,8 +1,10 @@
 package fii.industrial.cidesoft.horariofii.model;
 
+import java.util.ArrayList;
+
 public class Usuario {
 
-    private String Cursos;
+    private ArrayList<String> indexes;
     private String Nombre;
     private String Codigo;
     private int Contador;
@@ -10,10 +12,10 @@ public class Usuario {
     public Usuario() {
     }
 
-    public Usuario(String codigo, int contador, String cursos, String nombre) {
+    public Usuario(String codigo, int contador, ArrayList<String> indexes, String nombre) {
         Codigo = codigo;
         this.Contador = contador;
-        Cursos = cursos;
+        this.indexes = indexes;
         Nombre = nombre;
     }
 
@@ -33,12 +35,12 @@ public class Usuario {
         this.Contador = contador;
     }
 
-    public String getCursos() {
-        return Cursos;
+    public ArrayList<String> getIndexes() {
+        return indexes;
     }
 
-    public void setCursos(String cursos) {
-        Cursos = cursos;
+    public void setIndexes(ArrayList<String> indexes) {
+        this.indexes = indexes;
     }
 
     public String getNombre() {
