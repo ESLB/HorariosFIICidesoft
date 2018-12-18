@@ -13,6 +13,15 @@ public class Horario {
     String ciclo = "";
     String escuela = "";
     int index;
+    int seccion = 0;
+
+    public int getSeccion() {
+        return seccion;
+    }
+
+    public void setSeccion(int seccion) {
+        this.seccion = seccion;
+    }
 
     public ArrayList<String> getSecciones() {
         return secciones;

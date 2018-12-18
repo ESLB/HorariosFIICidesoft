@@ -23,6 +23,7 @@ import java.util.Map;
 
 import es.dmoral.toasty.Toasty;
 import fii.industrial.cidesoft.horariofii.R;
+import fii.industrial.cidesoft.horariofii.model.Curso;
 import fii.industrial.cidesoft.horariofii.model.CursoS;
 import fii.industrial.cidesoft.horariofii.model.Horario;
 import fii.industrial.cidesoft.horariofii.model.SingletonFII;
@@ -37,7 +38,8 @@ public class Panel_Curso extends AppCompatActivity {
     private ArrayList<ValueEventListener> valueEventListenerLest = new ArrayList<ValueEventListener>();
 
     private SingletonFII mSingletonFII;
-
+    private ArrayList<Horario> mHorariosEscogidos = new ArrayList<Horario>();
+    ArrayList<CursoS> datos = new ArrayList<CursoS>();
     @Override
     protected void onResume() {
         super.onResume();
@@ -58,7 +60,6 @@ public class Panel_Curso extends AppCompatActivity {
 
         mRecyclerView = (RecyclerView) findViewById(R.id.id_recyclerviewcursos);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
-        List<CursoS> datos = createData();
         mAdapter = new RecyclerAdapter(datos);
         mRecyclerView.setAdapter(mAdapter);
         //mAdapter.setData(datos);
@@ -70,73 +71,86 @@ public class Panel_Curso extends AppCompatActivity {
         super.onStart();
         if(mSingletonFII.NeedExcecuteForLoop()){
             setForLoop();
+            mSingletonFII.setNeedExcecuteForLoop(false);
         }
     }
 
     private void setForLoop() {
         String lugar;
+
         for (String dato: mSingletonFII.getIndexes()) {
             lugar = dato.split("-")[0];
+            final String seccion = dato.split("-")[1];
             FirebaseDatabase database = FirebaseDatabase.getInstance();
             final DatabaseReference myRef = database.getReference();
-            Toasty.success(Panel_Curso.this, lugar).show();
             myRef.child("cursos").child(lugar)
             .addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                     Horario horario = new Horario();
                     horario = dataSnapshot.getValue(Horario.class);
-                    Toasty.success(Panel_Curso.this, dataSnapshot.toString()).show();
-                    Toasty.success(Panel_Curso.this, horario.toString()).show();
-                    mSingletonFII.setNeedExcecuteForLoop(false);
-                    ArrayList<Horario> horariosEscogidos = mSingletonFII.getmHorariosEscogidos();
-                    for(Horario horarioS: horariosEscogidos){
-                        if(horarioS.getId_curso().equals(horario.getId_curso())){
-                            horariosEscogidos.remove(horarioS);
-                        }
-                    }
-
-                    horariosEscogidos.add(horario);
-                    mSingletonFII.setmHorariosEscogidos(horariosEscogidos);
-                    databaseReferenceList.add(myRef);
-                    valueEventListenerLest.add(this);
+                    horario.setSeccion(Integer.valueOf(seccion));
+                    mHorariosEscogidos.add(horario);
+                    generarHorarios();
                 }
+
+
                 @Override
                 public void onCancelled(@NonNull DatabaseError databaseError) {
                     //Mostrar mensaje de error
-                    databaseReferenceList.add(myRef);
-                    valueEventListenerLest.add(this);
                 }
             });
         }
     }
 
-    @Override
-    protected void onStop() {
-        super.onStop();
-        for(int i = 0; i < databaseReferenceList.size(); i++){
-            databaseReferenceList.get(i).removeEventListener(valueEventListenerLest.get(i));
-
+    private void generarHorarios() {
+        int pos = 0;
+        boolean erase = false;
+        int cont = 0;
+        for(Horario horario : mHorariosEscogidos){
+            if(horario.getId_curso().equals(mHorariosEscogidos.get(mHorariosEscogidos.size()-1).getId_curso())){
+                cont++;
+            }
         }
+
+        if(cont>1) {
+            Horario horario1 = mHorariosEscogidos.get(mHorariosEscogidos.size() - 1);
+            mHorariosEscogidos.remove(mHorariosEscogidos.size() - 1);
+            if (mHorariosEscogidos.size() > 2) {
+                for (Horario horario : mHorariosEscogidos) {
+                    if (horario.getId_curso().equals(horario1.getId_curso())) {
+                        if (mHorariosEscogidos.indexOf(horario) != mHorariosEscogidos.size() - 1)
+                            pos = mHorariosEscogidos.indexOf(horario);
+                        erase = true;
+                    }
+                }
+
+                if (erase) {
+                    mHorariosEscogidos.add(pos, horario1);
+                    mHorariosEscogidos.remove(pos + 1);
+                }
+            }
+        }
+        datos.clear();
+        for(Horario horario: mHorariosEscogidos){
+            int i = horario.getSeccion();
+            CursoS curso1 = new CursoS();
+            curso1.setNombre_Cruso(horario.getNombre());
+            curso1.setSalon(horario.getSalones().get(i));
+            curso1.setSeccion(horario.getSecciones().get(i));
+            curso1.setProfesor(horario.getProfesores().get(i));
+            curso1.setHorario(horario.getHorarios().get(i));
+            datos.add(curso1);
+        }
+        mAdapter.setCursos(datos);
+        mAdapter.notifyDataSetChanged();
     }
 
-    private List<CursoS> createData() {
-
-        List<CursoS> cursos = new ArrayList<CursoS>();
-        cursos.add(new CursoS("OPE II", "JUARI", "2","Salon","HOJRA"));
-        cursos.add(new CursoS("OPE II", "JUARI", "2","Salon","HOJRA"));
-        cursos.add(new CursoS("OPE II", "JUARI", "2","Salon","HOJRA"));
-        cursos.add(new CursoS("OPE II", "JUARI", "2","Salon","HOJRA"));
-        cursos.add(new CursoS("OPE II", "JUARI", "2","Salon","HOJRA"));
-        cursos.add(new CursoS("OPE II", "JUARI", "2","Salon","HOJRA"));
-        cursos.add(new CursoS("OPE II", "JUARI", "2","Salon","HOJRA"));cursos.add(new CursoS("OPE II", "JUARI", "2","Salon","HOJRA"));
-        cursos.add(new CursoS("OPE II", "JUARI", "2","Salon","HOJRA"));
-
-        return cursos;
-
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mSingletonFII.setNeedExcecuteForLoop(true);
     }
-
-    // TODO: Rename method, update argument and hook method into UI event
 
     private class DatosHolder extends RecyclerView.ViewHolder {
         private TextView nombcurso,nombprofesor,seccion,horario,salon;

@@ -157,10 +157,8 @@ public class PickActivity extends AppCompatActivity {
                     String index = mHorario.getIndex() + "-" + pos;
                     if(Listo.isChecked()){
                         mSingletonFII.getIndexes().add(index);
-                        Toasty.success(PickActivity.this, mSingletonFII.getIndexes().toString()).show();
                     } else {
-                        mSingletonFII.getIndexes().add(index);
-                        Toasty.success(PickActivity.this, mSingletonFII.getIndexes().toString()).show();
+                        mSingletonFII.getIndexes().remove(index);
                     }
                 }
             });

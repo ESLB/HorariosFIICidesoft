@@ -99,8 +99,6 @@ public class SchoolAct extends AppCompatActivity {
                     ArrayList<Horario> Horarios = new ArrayList<Horario>();
                     Horarios = dataSnapshot.getValue(t);
                     if(Horarios!=null) {
-                        Toasty.success(SchoolAct.this, Horarios.get(0).toString()).show();
-                        Toasty.success(SchoolAct.this, Horarios.size()+"").show();
                         mSingletonFII.setHorarios(Horarios);
                         DataReady_ChangeUI();
                     }
