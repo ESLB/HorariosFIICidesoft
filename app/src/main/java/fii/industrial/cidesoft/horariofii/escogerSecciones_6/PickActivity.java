@@ -5,6 +5,7 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -36,6 +37,7 @@ public class PickActivity extends AppCompatActivity {
     private RecyclerView RVHorarios;
     private RVAdapter Adapter;
     private TextView Spinner;
+    private ArrayList<String> indextemp = new ArrayList<String>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -104,6 +106,33 @@ public class PickActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+        ArrayList<String> temp = new ArrayList<>();
+        ArrayList<Integer> positions = new ArrayList<>();
+        for(String i : indextemp){
+            String horarioTemp = i.split("-")[0];
+            for(String a : mSingletonFII.getIndexes()){
+                String horario = i.split("-")[0];
+                if(horarioTemp.equals(horario)){
+                    positions.add(mSingletonFII.getIndexes().indexOf(a));
+                    temp.add(i);
+                }
+            }
+        }
+
+        for(int i = (positions.size()-1); i>-1; i--){
+            int a = positions.get(i);
+            mSingletonFII.getIndexes().remove(a);
+        }
+        for(String i : temp){
+            mSingletonFII.getIndexes().add(i);
+        }
+        positions.clear();
+        indextemp.clear();
+        Log.i("PICKACTIVITY.class", mSingletonFII.getIndexes().toString());
+    }
 
     private class HorarioHolder extends RecyclerView.ViewHolder{
 
@@ -114,6 +143,7 @@ public class PickActivity extends AppCompatActivity {
         private Spinner Secciones;
         private CheckBox Listo;
         private int pos;
+        private int initiation = 0;
 
         private Horario mHorario;
 
@@ -144,6 +174,12 @@ public class PickActivity extends AppCompatActivity {
                 public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                     updateHorario(position);
                     pos = position;
+                    String index = mHorario.getIndex() + "-" + pos;
+                    if(Listo.isChecked()){
+                        indextemp.add(index);
+                        Log.i("PICKACTIVITY.class", mSingletonFII.getIndexes().toString());
+
+                    }
                 }
 
                 @Override
@@ -157,11 +193,21 @@ public class PickActivity extends AppCompatActivity {
                     String index = mHorario.getIndex() + "-" + pos;
                     if(Listo.isChecked()){
                         mSingletonFII.getIndexes().add(index);
+
                     } else {
                         mSingletonFII.getIndexes().remove(index);
                     }
+                    Log.i("PICKACTIVIT.class", mSingletonFII.getIndexes().toString());
                 }
             });
+
+            for(String i : mSingletonFII.getIndexes()){
+                if((mHorario.getIndex()+"").equals(i.split("-")[0])){
+                    Listo.setChecked(true);
+                    Secciones.setSelection(Integer.valueOf(i.split("-")[1]));
+                    initiation = 1;
+                }
+            }
         }
 
         private void updateHorario(int position){
@@ -172,9 +218,11 @@ public class PickActivity extends AppCompatActivity {
 
     }
 
+
+
     private class RVAdapter extends RecyclerView.Adapter<HorarioHolder>{
 
-        private ArrayList<Horario> horarios;
+        public ArrayList<Horario> horarios;
 
         public RVAdapter(ArrayList<Horario> horarios){
             this.horarios = horarios;
