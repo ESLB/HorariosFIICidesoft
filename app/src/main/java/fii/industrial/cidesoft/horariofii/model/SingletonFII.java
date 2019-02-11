@@ -14,14 +14,33 @@ public class SingletonFII {
     private int ESCUELA = INDUSTRIAL;
     private int CICLO = 1;
     private Usuario usuario;
+    private String codigo;
     private ArrayList<String> indexes = new ArrayList<String>(); /* {"4-1","5-2"} Primero: Horario, Segundo: Sección (positión del número de la sección)*/
     private boolean hasHorarios = false;
     private ArrayList<Horario> mHorarios;
     private ArrayList<Horario> mHorariosFiltrados = new ArrayList<Horario>();
     private boolean needExcecuteForLoop = true;
 
+    public int getSource() {
+        return source;
+    }
+
+    public void setSource(int source) {
+        this.source = source;
+    }
+    public static final int SHARED_PREFERENCES = 0;
+    private int source = SHARED_PREFERENCES;
+
     public boolean NeedExcecuteForLoop() {
         return needExcecuteForLoop;
+    }
+
+    public String getCodigo() {
+        return codigo;
+    }
+
+    public void setCodigo(String codigo) {
+        this.codigo = codigo;
     }
 
     public void setNeedExcecuteForLoop(boolean needExcecuteForLoop) {

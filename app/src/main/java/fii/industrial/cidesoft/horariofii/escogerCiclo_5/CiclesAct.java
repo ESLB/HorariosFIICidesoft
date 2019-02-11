@@ -10,6 +10,10 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 import fii.industrial.cidesoft.horariofii.R;
 import fii.industrial.cidesoft.horariofii.cursosLista_3.Panel_Curso;
 import fii.industrial.cidesoft.horariofii.escogerSecciones_6.PickActivity;
@@ -125,7 +129,8 @@ public class CiclesAct extends AppCompatActivity {
             public void onClick(View v) {
                 if(VerificarValidez()){
                     mSingletonFII.GenerateCursosS();
-                    IrACursosS();
+                    CrearUsuario();
+
                 }
 
             }
@@ -133,6 +138,26 @@ public class CiclesAct extends AppCompatActivity {
 
         setBackground();
 
+    }
+    private void CrearUsuario(){
+
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference myRef = database.getReference("usuarios").child(mSingletonFII.getUsuario().getCodigo());
+        myRef.setValue(mSingletonFII.getUsuario()).addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+                SaveCursos();
+                IrACursosS();
+            }
+        });
+
+    }
+
+
+    private void SaveCursos() {
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        final DatabaseReference myRefT = database.getReference("usuarios").child(mSingletonFII.getUsuario().getCodigo()).child("cursos");
+        myRefT.setValue(mSingletonFII.getHorariosFiltradosString());
     }
 
     private void IrACursosS() {

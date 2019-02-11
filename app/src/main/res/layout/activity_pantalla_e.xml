@@ -11,74 +11,74 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <GridLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:columnCount="4"
-            android:rowCount="2"
-            android:layout_margin="8dp">
+        <!--<GridLayout-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:columnCount="4"-->
+            <!--android:rowCount="2"-->
+            <!--android:layout_margin="8dp">-->
 
-            <TextView
-                android:id="@+id/text_view_curso"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/texto_curso"
-                android:layout_columnWeight="2"
-                android:layout_column="0"
-                android:layout_row="0"
-                android:layout_gravity="start"
-                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-                android:textSize="20sp"/>
+            <!--<TextView-->
+                <!--android:id="@+id/text_view_curso"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:text="@string/texto_curso"-->
+                <!--android:layout_columnWeight="2"-->
+                <!--android:layout_column="0"-->
+                <!--android:layout_row="0"-->
+                <!--android:layout_gravity="start"-->
+                <!--android:textAppearance="@style/TextAppearance.AppCompat.Medium"-->
+                <!--android:textSize="20sp"/>-->
 
-            <Spinner
-                android:id="@+id/spinner_seccion"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_column="1"
-                android:layout_row="0"
-                android:layout_columnWeight="1">
-            </Spinner>
+            <!--<Spinner-->
+                <!--android:id="@+id/spinner_seccion"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_column="1"-->
+                <!--android:layout_row="0"-->
+                <!--android:layout_columnWeight="1">-->
+            <!--</Spinner>-->
 
-            <CheckBox
-                android:id="@+id/check_estado_curso"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_column="2"
-                android:layout_columnWeight="1"
-                android:layout_row="0"
-                android:layout_gravity="center"/>
+            <!--<CheckBox-->
+                <!--android:id="@+id/check_estado_curso"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_column="2"-->
+                <!--android:layout_columnWeight="1"-->
+                <!--android:layout_row="0"-->
+                <!--android:layout_gravity="center"/>-->
 
-            <TextView
-                android:id="@+id/text_view_profesor"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/texto_profesor"
-                android:layout_row="1"
-                android:layout_column="0"
-                android:layout_gravity="start"
-                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-                android:textSize="20sp"/>
+            <!--<TextView-->
+                <!--android:id="@+id/text_view_profesor"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:text="@string/texto_profesor"-->
+                <!--android:layout_row="1"-->
+                <!--android:layout_column="0"-->
+                <!--android:layout_gravity="start"-->
+                <!--android:textAppearance="@style/TextAppearance.AppCompat.Medium"-->
+                <!--android:textSize="20sp"/>-->
 
-        </GridLayout>
+        <!--</GridLayout>-->
 
-        <Button
-            android:id="@+id/boton_guardar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Guardar"
-            android:layout_gravity="center"/>
+        <!--<Button-->
+            <!--android:id="@+id/boton_guardar"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:text="Guardar"-->
+            <!--android:layout_gravity="center"/>-->
 
-        <TextView
-            android:id="@+id/txt_spinnerText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="TextView" />
+        <!--<TextView-->
+            <!--android:id="@+id/txt_spinnerText"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:text="TextView" />-->
 
-        <TextView
-            android:id="@+id/txt_checktext"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="TextView" />
+        <!--<TextView-->
+            <!--android:id="@+id/txt_checktext"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:text="TextView" />-->
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/rv_horarios"

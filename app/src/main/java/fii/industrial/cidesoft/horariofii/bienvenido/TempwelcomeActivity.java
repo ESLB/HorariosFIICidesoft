@@ -53,6 +53,7 @@ public class TempwelcomeActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent i = new Intent(TempwelcomeActivity.this, loginActivity.class);
                 startActivity(i);
+                finish();
             }
         });
 

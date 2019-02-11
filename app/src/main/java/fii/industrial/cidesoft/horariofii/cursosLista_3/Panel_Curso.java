@@ -1,5 +1,7 @@
 package fii.industrial.cidesoft.horariofii.cursosLista_3;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -8,6 +10,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.google.firebase.database.DataSnapshot;
@@ -27,27 +30,28 @@ import fii.industrial.cidesoft.horariofii.model.Curso;
 import fii.industrial.cidesoft.horariofii.model.CursoS;
 import fii.industrial.cidesoft.horariofii.model.Horario;
 import fii.industrial.cidesoft.horariofii.model.SingletonFII;
+import fii.industrial.cidesoft.horariofii.model.Usuario;
 import fii.industrial.cidesoft.horariofii.model.database.DataBaseFirebase;
+import io.reactivex.disposables.CompositeDisposable;
 
 public class Panel_Curso extends AppCompatActivity {
 
     private RecyclerView mRecyclerView;
     private RecyclerAdapter mAdapter;
-
+    private Button logOut;
     private ArrayList<DatabaseReference> databaseReferenceList = new ArrayList<DatabaseReference>();
     private ArrayList<ValueEventListener> valueEventListenerLest = new ArrayList<ValueEventListener>();
 
     private SingletonFII mSingletonFII;
     private ArrayList<Horario> mHorariosEscogidos = new ArrayList<Horario>();
     ArrayList<CursoS> datos = new ArrayList<CursoS>();
+
     @Override
     protected void onResume() {
         super.onResume();
         Toasty.info(Panel_Curso.this, "Se llamo").show();
-        mSingletonFII.getUsuario().setContador(mSingletonFII.getUsuario().getContador()+1);
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        final DatabaseReference myRefT = database.getReference("usuarios").child(mSingletonFII.getUsuario().getCodigo()).child("contador");
-        myRefT.setValue(mSingletonFII.getUsuario().getContador());
+
+
     }
 
     @Override
@@ -55,15 +59,58 @@ public class Panel_Curso extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_panel__curso);
 
+        SharedPreferences sharedPref = this.getPreferences(Context.MODE_PRIVATE);
+        String var = sharedPref.getString("CODIGO", "N");
+        Toasty.success(this, "Se llamo " + var).show();
+
         mSingletonFII = SingletonFII.getSingletonFII(getApplicationContext());
+        if(mSingletonFII.getUsuario()==null) {
+            FirebaseDatabase database = FirebaseDatabase.getInstance();
+            final DatabaseReference myRef = database.getReference("usuarios").child(mSingletonFII.getCodigo());
+            myRef.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    Usuario usuario = dataSnapshot.getValue(Usuario.class);
+                    //Login correcto
+                    mSingletonFII.setUsuario(usuario);
+                    mSingletonFII.getUsuario().setContador(mSingletonFII.getUsuario().getContador()+1);
+                    FirebaseDatabase database = FirebaseDatabase.getInstance();
+                    final DatabaseReference myRefT = database.getReference("usuarios").child(mSingletonFII.getUsuario().getCodigo()).child("contador");
+                    myRefT.setValue(mSingletonFII.getUsuario().getContador());
+                }
 
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
 
+                }
+            });
+        }
         mRecyclerView = (RecyclerView) findViewById(R.id.id_recyclerviewcursos);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
         mAdapter = new RecyclerAdapter(datos);
         mRecyclerView.setAdapter(mAdapter);
         //mAdapter.setData(datos);
         //mAdapter.notifyDataSetChanged();
+        logOut = (Button) findViewById(R.id.btn_cursos);
+        logOut.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                closeSession();
+            }
+        });
+    }
+
+    private void closeSession() {
+
+        SharedPreferences sharedPref = getApplicationContext().getSharedPreferences("HF", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.remove("CODIGO");
+        editor.commit();
+        String var = sharedPref.getString("CODIGO", "SE ELIMINO");
+        Toasty.success(this, "Se llamo " + var).show();
+        editor.clear();
+        editor.commit();
+        finish();
     }
 
     @Override

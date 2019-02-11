@@ -9,21 +9,23 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity
-            android:name=".bienvenido.TempwelcomeActivity"
-            android:screenOrientation="portrait">
+        <activity android:name=".splashScreen_0.SplashActivity"
+            android:theme="@style/Theme.Design.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".bienvenido.TempwelcomeActivity"
+            android:screenOrientation="portrait"></activity>
         <activity
             android:name=".pruebas.PruebasFirebase"
             android:screenOrientation="portrait" />
         <activity
             android:name=".login_1.loginActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait">
+        </activity>
         <activity
             android:name=".acercaDe_9.AboutActivity"
             android:screenOrientation="portrait" />
@@ -48,7 +50,7 @@
         <activity
             android:name=".escogerSecciones_6.PickActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".pruebas.ActivityPruebas"></activity>
+        <activity android:name=".pruebas.ActivityPruebas" />
     </application>
 
 </manifest>

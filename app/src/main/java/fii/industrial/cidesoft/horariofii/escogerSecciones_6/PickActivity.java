@@ -53,56 +53,56 @@ public class PickActivity extends AppCompatActivity {
         RVHorarios.setAdapter(Adapter);
 
 
-        Check = (TextView) findViewById(R.id.txt_checktext);
-        Spinner = (TextView) findViewById(R.id.txt_spinnerText);
+//        Check = (TextView) findViewById(R.id.txt_checktext);
+//        Spinner = (TextView) findViewById(R.id.txt_spinnerText);
+//
+//        textView_curso = (TextView)findViewById(R.id.text_view_curso);
+//        textView_Profesor = (TextView)findViewById(R.id.text_view_profesor);
+//        button_Guardar = (Button)findViewById(R.id.boton_guardar);
+//        spinner_seccion = (Spinner)findViewById(R.id.spinner_seccion);
+//
+//        checkBox_estado_curso = (CheckBox)findViewById(R.id.check_estado_curso);
+//        checkBox_estado_curso.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                String cadena = textView_curso.getText().toString() + " " + textView_Profesor.getText().toString() + " " + spinner_seccion.getSelectedItem().toString() + " index "+ + mHorarios.get(1).getIndex();
+//                Check.setText(cadena);
+//            }
+//        });
 
-        textView_curso = (TextView)findViewById(R.id.text_view_curso);
-        textView_Profesor = (TextView)findViewById(R.id.text_view_profesor);
-        button_Guardar = (Button)findViewById(R.id.boton_guardar);
-        spinner_seccion = (Spinner)findViewById(R.id.spinner_seccion);
-
-        checkBox_estado_curso = (CheckBox)findViewById(R.id.check_estado_curso);
-        checkBox_estado_curso.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String cadena = textView_curso.getText().toString() + " " + textView_Profesor.getText().toString() + " " + spinner_seccion.getSelectedItem().toString() + " index "+ + mHorarios.get(1).getIndex();
-                Check.setText(cadena);
-            }
-        });
-
-        spinner_seccion.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                String cadena = textView_curso.getText().toString() + " " + textView_Profesor.getText().toString() + " " + spinner_seccion.getSelectedItem().toString() + " position "+ + position;
-                Spinner.setText(cadena);
-            }
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
+//        spinner_seccion.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+//            @Override
+//            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+//                String cadena = textView_curso.getText().toString() + " " + textView_Profesor.getText().toString() + " " + spinner_seccion.getSelectedItem().toString() + " position "+ + position;
+//                Spinner.setText(cadena);
+//            }
+//            @Override
+//            public void onNothingSelected(AdapterView<?> parent) {
+//
+//            }
+//        });
 
         MostrarInformacion();
 
-        button_Guardar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-            }
-        });
+//        button_Guardar.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//
+//            }
+//        });
     }
 
     private void MostrarInformacion(){
 
         if(mHorarios.size()>0){
-            Horario horario = mHorarios.get(1);
-            textView_curso.setText(horario.getNombre());
-            textView_Profesor.setText(horario.getProfesores().get(0));
+//            Horario horario = mHorarios.get(1);
+//            textView_curso.setText(horario.getNombre());
+//            textView_Profesor.setText(horario.getProfesores().get(0));
         }else {
             Toasty.info(this, "No hay horarios con estos filtros").show();
         }
         ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, new String[] {"1", "4", "5"});
-        spinner_seccion.setAdapter(arrayAdapter);
+//        spinner_seccion.setAdapter(arrayAdapter);
 
     }
 

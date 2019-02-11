@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -31,6 +32,7 @@ public class SchoolAct extends AppCompatActivity {
     private int Contador = 0;
     private Button industrial ;
     private Button seguridad;
+    private TextView username;
     private Button textil;
     private ProgressBar progressBar;
     private SingletonFII mSingletonFII;
@@ -44,11 +46,14 @@ public class SchoolAct extends AppCompatActivity {
         industrial = (Button) findViewById(R.id.btn_ciclo_1);
         seguridad= (Button) findViewById(R.id.btn_ciclo_3);
         textil = (Button) findViewById(R.id.btn_ciclo_2);
+        username = (TextView) findViewById(R.id.txt_username);
         mSingletonFII = SingletonFII.getSingletonFII(getApplicationContext());
         progressBar = (ProgressBar) findViewById(R.id.prog_escuela);
         industrial.setVisibility(View.INVISIBLE);
         textil.setVisibility(View.INVISIBLE);
         seguridad.setVisibility(View.INVISIBLE);
+
+        username.setText(mSingletonFII.getUsuario().getNombre());
 
         industrial.setOnClickListener(new View.OnClickListener() {
             @Override

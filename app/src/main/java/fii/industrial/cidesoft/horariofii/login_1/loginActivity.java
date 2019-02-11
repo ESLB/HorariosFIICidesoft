@@ -1,6 +1,8 @@
 package fii.industrial.cidesoft.horariofii.login_1;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
 import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.AppCompatActivity;
@@ -45,6 +47,8 @@ public class loginActivity extends AppCompatActivity {
 
         mSingletonFII = SingletonFII.getSingletonFII(getApplicationContext());
 
+        verifySession();
+
         Ingresar = (Button) findViewById(R.id.btn_ingresar_login);
         AcercaDe = (Button) findViewById(R.id.btn_acercaDe_login);
         Codigo = (TextInputEditText) findViewById(R.id.txt_codigo);
@@ -76,6 +80,26 @@ public class loginActivity extends AppCompatActivity {
                LlamarCreador();
             }
         });
+    }
+
+    private void verifySession() {
+        SharedPreferences sharedPref = getApplicationContext().getSharedPreferences("HF", Context.MODE_PRIVATE);
+        String codigo = sharedPref.getString("CODIGO", "Not found");
+
+        SharedPreferences.Editor editor = sharedPref.edit();
+
+        editor.clear();
+        editor.commit();
+        if(!codigo.equals("Not found")){
+            Toasty.success(this, "NN " + codigo).show();
+            if(!codigo.equals("N")) {
+                Toasty.success(this, "Llegó" +  codigo).show();
+                mSingletonFII.setCodigo(codigo);
+                IrActivity("horariofinal");
+                finish();
+            }
+        }
+
     }
 
     private void IrActivity(String act) {
@@ -119,9 +143,12 @@ public class loginActivity extends AppCompatActivity {
                     myRef.removeEventListener(this);
                 }
                 else{
+                    //Login correcto
                     mSingletonFII.setUsuario(usuario);
                     IrActivity("horariofinal");
                     myRef.removeEventListener(this);
+                    savedSessionData();
+                    finish();
                 }
             }
 
@@ -137,6 +164,13 @@ public class loginActivity extends AppCompatActivity {
         } else{
             IrActivity("horariofinal");
         }*/
+    }
+
+    private void savedSessionData() {
+        SharedPreferences sharedPref = this.getPreferences(Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putString("CODIGO", mSingletonFII.getUsuario().getCodigo());
+        editor.apply();
     }
 
     private void LlamarCreador() {

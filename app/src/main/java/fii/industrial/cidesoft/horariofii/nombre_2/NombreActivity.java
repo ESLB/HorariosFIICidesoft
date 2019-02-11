@@ -54,15 +54,7 @@ public class NombreActivity extends AppCompatActivity {
 
         mSingletonFII.getUsuario().setNombre(nombreCompleto);
         mSingletonFII.getUsuario().setContador(1);
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = database.getReference("usuarios").child(mSingletonFII.getUsuario().getCodigo());
-        myRef.setValue(mSingletonFII.getUsuario()).addOnSuccessListener(new OnSuccessListener<Void>() {
-            @Override
-            public void onSuccess(Void aVoid) {
-                PasarACursos();
-            }
-        });
-
+        PasarACursos();
     }
 
     private void PasarACursos() {
