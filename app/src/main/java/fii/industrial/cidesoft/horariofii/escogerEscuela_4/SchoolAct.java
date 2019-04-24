@@ -140,7 +140,9 @@ public class SchoolAct extends AppCompatActivity {
         textil.setVisibility(View.VISIBLE);
     }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
 
-
-
+    }
 }

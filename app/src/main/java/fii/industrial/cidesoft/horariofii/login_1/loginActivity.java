@@ -120,7 +120,7 @@ public class loginActivity extends AppCompatActivity {
         }
         if(i!=null)
         startActivity(i);
-
+        finish();
     }
 
     private void validarDatos(String codigo) {

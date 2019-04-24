@@ -8,28 +8,32 @@ public class SingletonFII {
 
     private static SingletonFII mSingletonFII;
     private Context context;
+
     public static final int INDUSTRIAL = 0;
     public static final int TEXTIL = 1;
     public static final int SEGURIDAD = 2;
     private int ESCUELA = INDUSTRIAL;
+
     private int CICLO = 1;
     private Usuario usuario;
     private String codigo;
+
     private ArrayList<String> indexes = new ArrayList<String>(); /* {"4-1","5-2"} Primero: Horario, Segundo: Sección (positión del número de la sección)*/
     private boolean hasHorarios = false;
     private ArrayList<Horario> mHorarios;
     private ArrayList<Horario> mHorariosFiltrados = new ArrayList<Horario>();
     private boolean needExcecuteForLoop = true;
 
-    public int getSource() {
+    public static final String SHARED_PREFERENCES = "Horario-FII";
+    private String source = SHARED_PREFERENCES;
+
+    public String getSource() {
         return source;
     }
 
-    public void setSource(int source) {
+    public void setSource(String source) {
         this.source = source;
     }
-    public static final int SHARED_PREFERENCES = 0;
-    private int source = SHARED_PREFERENCES;
 
     public boolean NeedExcecuteForLoop() {
         return needExcecuteForLoop;
@@ -178,3 +182,5 @@ public class SingletonFII {
         return result.toString();
     }
 }
+
+
