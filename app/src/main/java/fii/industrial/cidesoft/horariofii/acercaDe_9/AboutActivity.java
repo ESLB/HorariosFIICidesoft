@@ -25,7 +25,7 @@ public class AboutActivity extends AppCompatActivity {
                 if(contador>2){
                     Toasty.success(AboutActivity.this, "Yuri Fernández").show();
                 }
-
+        //Comentario
             }
         });
 
