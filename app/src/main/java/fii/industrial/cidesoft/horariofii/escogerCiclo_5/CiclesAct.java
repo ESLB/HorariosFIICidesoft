@@ -143,10 +143,14 @@ public class CiclesAct extends AppCompatActivity {
                     SharedPreferences sharedPref = getApplicationContext().getSharedPreferences(SingletonFII.SHARED_PREFERENCES, Context.MODE_PRIVATE);
                     SharedPreferences.Editor editor = sharedPref.edit();
                     editor.putBoolean("CursosInfo", true);
+                    editor.putString("Indexes", mSingletonFII.getIndexes().toString());
+
                     editor.apply();
                     //Al parecer guarda los cursos correctamente. Es que antes la base de datos debía guardar los cursos, ahora no.
                     mSingletonFII.GenerateCursosS();
                     //CrearUsuario();
+                    IrACursosS();
+
                     finish();
                 }
 
@@ -164,7 +168,6 @@ public class CiclesAct extends AppCompatActivity {
             @Override
             public void onSuccess(Void aVoid) {
                 SaveCursos();
-                IrACursosS();
             }
         });
 

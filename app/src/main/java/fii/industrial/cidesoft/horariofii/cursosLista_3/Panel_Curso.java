@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -46,13 +47,7 @@ public class Panel_Curso extends AppCompatActivity {
     private ArrayList<Horario> mHorariosEscogidos = new ArrayList<Horario>();
     ArrayList<CursoS> datos = new ArrayList<CursoS>();
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        Toasty.info(Panel_Curso.this, "Se llamo").show();
 
-
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,30 +55,27 @@ public class Panel_Curso extends AppCompatActivity {
         setContentView(R.layout.activity_panel__curso);
 
         SharedPreferences sharedPref = this.getPreferences(Context.MODE_PRIVATE);
-        String var = sharedPref.getString("CODIGO", "N");
-        Toasty.success(this, "Se llamo " + var).show();
+        //String var = sharedPref.getString("CODIGO", "N");
+        //Toasty.success(this, "Se llamo " + var).show();
 
         mSingletonFII = SingletonFII.getSingletonFII(getApplicationContext());
-        if(mSingletonFII.getUsuario()==null) {
+        if(mSingletonFII.getUsuario()!=null) {
             FirebaseDatabase database = FirebaseDatabase.getInstance();
-            final DatabaseReference myRef = database.getReference("usuarios").child(mSingletonFII.getCodigo());
-            myRef.addValueEventListener(new ValueEventListener() {
+            final DatabaseReference myRef = database.getReference("usuarios").child(mSingletonFII.getUsuario().getCodigo());
+
+            /*myRef.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                     Usuario usuario = dataSnapshot.getValue(Usuario.class);
                     //Login correcto
-                    mSingletonFII.setUsuario(usuario);
-                    mSingletonFII.getUsuario().setContador(mSingletonFII.getUsuario().getContador()+1);
-                    FirebaseDatabase database = FirebaseDatabase.getInstance();
-                    final DatabaseReference myRefT = database.getReference("usuarios").child(mSingletonFII.getUsuario().getCodigo()).child("contador");
-                    myRefT.setValue(mSingletonFII.getUsuario().getContador());
+
                 }
 
                 @Override
                 public void onCancelled(@NonNull DatabaseError databaseError) {
 
                 }
-            });
+            });*/
         }
         mRecyclerView = (RecyclerView) findViewById(R.id.id_recyclerviewcursos);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
@@ -105,43 +97,86 @@ public class Panel_Curso extends AppCompatActivity {
         SharedPreferences sharedPref = getApplicationContext().getSharedPreferences("HF", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();
         editor.remove("CODIGO");
-        editor.commit();
+
         String var = sharedPref.getString("CODIGO", "SE ELIMINO");
-        Toasty.success(this, "Se llamo " + var).show();
+        //Toasty.success(this, "Se llamo " + var).show();
         editor.clear();
-        editor.commit();
+        editor.apply();
         finish();
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-        if(mSingletonFII.NeedExcecuteForLoop()){
+        //Primera llama al bucle recursivo
+        Toasty.info(this, mSingletonFII.getIndexes().toString()).show();
+        getHorarios(mSingletonFII.getIndexes());
+
+        //Ignoremos esto
+        /*if(mSingletonFII.NeedExcecuteForLoop()){
             setForLoop();
             mSingletonFII.setNeedExcecuteForLoop(false);
-        }
+        }*/
+    }
+
+    private void getHorarios(final ArrayList<String> indexes) {
+        String dato = indexes.get(0);
+        String lugar = dato.split("-")[0];
+        final String seccion = dato.split("-")[1];
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        final DatabaseReference myRef = database.getReference();
+        //Toasty.info(Panel_Curso.this, "Lugar " + lugar + " seccion " + seccion).show();
+        myRef.child("cursos").child(lugar)
+            .addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    Horario horario;
+
+                    horario = dataSnapshot.getValue(Horario.class);
+                    if(horario!=null    )
+                    {
+                        horario.setSeccion(Integer.valueOf(seccion));
+                        mHorariosEscogidos.add(horario);
+                        generarHorarios();
+                        //Toasty.info(Panel_Curso.this, "Llamado una vez ### " + horario.getId_curso() + " ###").show();
+                        indexes.remove(0);
+                        if(indexes.size()>0){
+                            getHorarios(indexes);
+                        }
+                    }
+
+
+
+                }
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+                    //Mostrar mensaje de error
+                }
+            });
     }
 
     private void setForLoop() {
+        //Aquí se llaman a los horarios del Firebase, hagamos que sea recursiva
         String lugar;
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        final DatabaseReference myRef = database.getReference();
+        Toasty.info(this, mSingletonFII.getIndexes().toString()).show();
 
         for (String dato: mSingletonFII.getIndexes()) {
             lugar = dato.split("-")[0];
             final String seccion = dato.split("-")[1];
-            FirebaseDatabase database = FirebaseDatabase.getInstance();
-            final DatabaseReference myRef = database.getReference();
+            Toasty.info(Panel_Curso.this, "Lugar " + lugar + " seccion " + seccion).show();
             myRef.child("cursos").child(lugar)
-            .addValueEventListener(new ValueEventListener() {
+            .addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                    Horario horario = new Horario();
+                    Horario horario;
                     horario = dataSnapshot.getValue(Horario.class);
                     horario.setSeccion(Integer.valueOf(seccion));
                     mHorariosEscogidos.add(horario);
                     generarHorarios();
+                    Toasty.info(Panel_Curso.this, "Llamado una vez ### " + horario.getId_curso() + " ###").show();
                 }
-
-
                 @Override
                 public void onCancelled(@NonNull DatabaseError databaseError) {
                     //Mostrar mensaje de error
@@ -150,7 +185,12 @@ public class Panel_Curso extends AppCompatActivity {
         }
     }
 
+
     private void generarHorarios() {
+        //Cambiar totalmente el método , no sirve así
+        
+
+        //
         int pos = 0;
         boolean erase = false;
         int cont = 0;
@@ -189,6 +229,7 @@ public class Panel_Curso extends AppCompatActivity {
             curso1.setHorario(horario.getHorarios().get(i));
             datos.add(curso1);
         }
+        //TODO ESTE ES EL QUE SIRVE
         mAdapter.setCursos(datos);
         mAdapter.notifyDataSetChanged();
     }
@@ -196,6 +237,7 @@ public class Panel_Curso extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        //TODO Eliminar
         mSingletonFII.setNeedExcecuteForLoop(true);
     }
 
@@ -257,6 +299,32 @@ public class Panel_Curso extends AppCompatActivity {
 
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        //Toasty.info(Panel_Curso.this, "Se llamo").show();
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        mSingletonFII.getUsuario().setContador(mSingletonFII.getUsuario().getContador()+1);
+        SharedPreferences settings = getApplicationContext().getSharedPreferences(SingletonFII.SHARED_PREFERENCES, Context.MODE_PRIVATE);
+        // Writing data to SharedPreferences
+        SharedPreferences.Editor editor = settings.edit();
+        editor.putInt("ContadorUsuario", mSingletonFII.getUsuario().getContador());
+        editor.apply();
+        final DatabaseReference myRefT = database.getReference("usuarios").child(mSingletonFII.getUsuario().getCodigo()).child("contador");
+        myRefT.setValue(mSingletonFII.getUsuario().getContador());
+        //Toasty.info(this, mSingletonFII.getUsuario().getContador()+" El contador guardado").show();
 
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+    }
 
 }

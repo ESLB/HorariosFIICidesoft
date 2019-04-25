@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import es.dmoral.toasty.Toasty;
 import fii.industrial.cidesoft.horariofii.R;
@@ -38,7 +39,6 @@ public class SplashActivity extends AppCompatActivity {
             }
         }, 1000);
 
-
     }
 
 
@@ -51,6 +51,7 @@ public class SplashActivity extends AppCompatActivity {
         Toasty.info(this,"estado usuario: " + registradoInfoUsuario+", cursos:" + registradoInfoCursos).show();
         if(registradoInfoCursos&&registradoInfoUsuario){
             setUsuarioData();
+            setDataIndexes();
             IrActivity("horariofinal");
             //Leer info y guardarla en SingleTone
         } else if(registradoInfoUsuario){
@@ -80,11 +81,24 @@ public class SplashActivity extends AppCompatActivity {
 
     }
 
+    private void setDataIndexes() {
+        SharedPreferences sharedPref = getApplicationContext().getSharedPreferences(SingletonFII.SHARED_PREFERENCES, Context.MODE_PRIVATE);
+        String indexes = sharedPref.getString("Indexes", "");
+        indexes = indexes.substring(1, indexes.length()-1);
+        String[] indexesNew = indexes.split(",");
+        ArrayList<String> indexesNew1 = new ArrayList<String>();
+        indexesNew1.addAll(Arrays.asList(indexesNew));
+        Toasty.info(this,"indexes " + indexesNew1.toString()).show();
+        mSingletonFII.setIndexes(indexesNew1);
+        //mSingletonFII.setIndexes(indexes);
+
+    }
+
     private void setUsuarioData() {
         SharedPreferences sharedPref = getApplicationContext().getSharedPreferences(SingletonFII.SHARED_PREFERENCES, Context.MODE_PRIVATE);
 
         String nombre = sharedPref.getString("NombreUsuario", "");
-        Toasty.info(this,nombre + "sacado").show();
+        //Toasty.info(this,nombre + "sacado").show();
         String codigo = sharedPref.getString("CodigoUsuario", "");;
         int contador = sharedPref.getInt("ContadorUsuario", 0);
         Usuario usuarioN = new Usuario();
@@ -94,7 +108,8 @@ public class SplashActivity extends AppCompatActivity {
         usuarioN.setNombre(nombre);
         usuarioN.setIndexes(indexes);
         mSingletonFII.setUsuario(usuarioN);
-        Toasty.info(this,mSingletonFII.getUsuario().getNombre()+"Nombre usuario guardado singletone").show();
+        //
+        // Toasty.info(this,mSingletonFII.getUsuario().getNombre()+"Nombre usuario guardado singletone").show();
 
     }
 
