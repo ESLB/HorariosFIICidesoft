@@ -145,7 +145,17 @@ public class loginActivity extends AppCompatActivity {
                 else{
                     //Login correcto
                     mSingletonFII.setUsuario(usuario);
-                    IrActivity("horariofinal");
+                    //Guardar info en el SharedPreferences para que no vuelva a hacer la llamada
+                    SharedPreferences settings = getApplicationContext().getSharedPreferences(SingletonFII.SHARED_PREFERENCES, Context.MODE_PRIVATE);
+                    // Writing data to SharedPreferences
+                    SharedPreferences.Editor editor = settings.edit();
+                    editor.putBoolean("UsuarioInfo", true);
+                    editor.putString("NombreUsuario", mSingletonFII.getUsuario().getNombre());
+                    editor.putInt("ContadorUsuario", mSingletonFII.getUsuario().getContador());
+                    editor.putString("CodigoUsuario", mSingletonFII.getUsuario().getCodigo());
+                    editor.apply();
+                    ///
+                    IrActivity("school");
                     myRef.removeEventListener(this);
                     savedSessionData();
                     finish();

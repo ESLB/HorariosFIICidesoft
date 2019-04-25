@@ -1,6 +1,8 @@
 package fii.industrial.cidesoft.horariofii.escogerCiclo_5;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -16,6 +18,7 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import fii.industrial.cidesoft.horariofii.R;
 import fii.industrial.cidesoft.horariofii.cursosLista_3.Panel_Curso;
+import fii.industrial.cidesoft.horariofii.escogerEscuela_4.SchoolAct;
 import fii.industrial.cidesoft.horariofii.escogerSecciones_6.PickActivity;
 import fii.industrial.cidesoft.horariofii.model.SingletonFII;
 import fii.industrial.cidesoft.horariofii.pruebas.ActivityPruebas;
@@ -35,6 +38,13 @@ public class CiclesAct extends AppCompatActivity {
     private Button Ciclo9;
     private Button Ciclo10;
     private Button Finalizar;
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent i = new Intent(this, SchoolAct.class);
+        startActivity(i);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -128,9 +138,16 @@ public class CiclesAct extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if(VerificarValidez()){
-                    mSingletonFII.GenerateCursosS();
-                    CrearUsuario();
 
+                    //Guardar en el SharedPreferences "CursosInfo" true
+                    SharedPreferences sharedPref = getApplicationContext().getSharedPreferences(SingletonFII.SHARED_PREFERENCES, Context.MODE_PRIVATE);
+                    SharedPreferences.Editor editor = sharedPref.edit();
+                    editor.putBoolean("CursosInfo", true);
+                    editor.apply();
+                    //Al parecer guarda los cursos correctamente. Es que antes la base de datos debía guardar los cursos, ahora no.
+                    mSingletonFII.GenerateCursosS();
+                    //CrearUsuario();
+                    finish();
                 }
 
             }
@@ -172,6 +189,7 @@ public class CiclesAct extends AppCompatActivity {
     private void irActivity() {
         Intent i = new Intent(this, PickActivity.class);
         startActivity(i);
+        finish();
     }
 
     private void setBackground(){

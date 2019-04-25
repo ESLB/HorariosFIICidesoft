@@ -54,7 +54,7 @@ public class SchoolAct extends AppCompatActivity {
         seguridad.setVisibility(View.INVISIBLE);
 
         username.setText(mSingletonFII.getUsuario().getNombre());
-
+        //Toasty.info(this, mSingletonFII.getUsuario().getNombre() + mSingletonFII.getUsuario().getCodigo()+mSingletonFII.getUsuario().getContador()).show();
         industrial.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -130,6 +130,7 @@ public class SchoolAct extends AppCompatActivity {
         Intent i = null;
         i = new Intent(this, CiclesAct.class);
         startActivity(i);
+        finish();
 
     }
 

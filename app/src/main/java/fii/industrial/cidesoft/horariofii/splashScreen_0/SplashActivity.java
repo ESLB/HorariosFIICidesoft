@@ -4,16 +4,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Handler;
-import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.widget.Toast;
-
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
@@ -28,13 +20,15 @@ import fii.industrial.cidesoft.horariofii.model.Usuario;
 import fii.industrial.cidesoft.horariofii.nombre_2.NombreActivity;
 
 public class SplashActivity extends AppCompatActivity {
-    private SingletonFII mSingletonFII;
+    private SingletonFII mSingletonFII  ;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
+
+        mSingletonFII = SingletonFII.getSingletonFII(getApplicationContext());
 
         Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
@@ -54,11 +48,13 @@ public class SplashActivity extends AppCompatActivity {
         SharedPreferences.Editor editor = sharedPref.edit();
         boolean registradoInfoUsuario = sharedPref.getBoolean("UsuarioInfo", false);
         boolean registradoInfoCursos = sharedPref.getBoolean("CursosInfo", false);
-
+        Toasty.info(this,"estado usuario: " + registradoInfoUsuario+", cursos:" + registradoInfoCursos).show();
         if(registradoInfoCursos&&registradoInfoUsuario){
+            setUsuarioData();
             IrActivity("horariofinal");
             //Leer info y guardarla en SingleTone
         } else if(registradoInfoUsuario){
+            setUsuarioData();
             IrActivity("school");
             //Leer info y guardarla en SingleTone
         } else {
@@ -84,6 +80,23 @@ public class SplashActivity extends AppCompatActivity {
 
     }
 
+    private void setUsuarioData() {
+        SharedPreferences sharedPref = getApplicationContext().getSharedPreferences(SingletonFII.SHARED_PREFERENCES, Context.MODE_PRIVATE);
+
+        String nombre = sharedPref.getString("NombreUsuario", "");
+        Toasty.info(this,nombre + "sacado").show();
+        String codigo = sharedPref.getString("CodigoUsuario", "");;
+        int contador = sharedPref.getInt("ContadorUsuario", 0);
+        Usuario usuarioN = new Usuario();
+        ArrayList<String> indexes = new ArrayList<>();
+        usuarioN.setContador(contador);
+        usuarioN.setCodigo(codigo);
+        usuarioN.setNombre(nombre);
+        usuarioN.setIndexes(indexes);
+        mSingletonFII.setUsuario(usuarioN);
+        Toasty.info(this,mSingletonFII.getUsuario().getNombre()+"Nombre usuario guardado singletone").show();
+
+    }
 
 
     private void IrALogin(){

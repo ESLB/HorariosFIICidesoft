@@ -1,5 +1,6 @@
 package fii.industrial.cidesoft.horariofii.nombre_2;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
@@ -51,26 +52,42 @@ public class NombreActivity extends AppCompatActivity {
 
     }
 
-    private void CrearUsuario(String nombreCompleto){
+    private void CrearUsuario(String nombreCompleto) {
 
         mSingletonFII.getUsuario().setNombre(nombreCompleto);
         mSingletonFII.getUsuario().setContador(0);
 
-        SharedPreferences settings = getSharedPreferences(SingletonFII.SHARED_PREFERENCES, MODE_PRIVATE);
-
+        SharedPreferences settings = getApplicationContext().getSharedPreferences(SingletonFII.SHARED_PREFERENCES, Context.MODE_PRIVATE);
         // Writing data to SharedPreferences
         SharedPreferences.Editor editor = settings.edit();
         editor.putBoolean("UsuarioInfo", true);
         editor.apply();
         editor.putString("NombreUsuario", mSingletonFII.getUsuario().getNombre());
+        Toasty.info(this, mSingletonFII.getUsuario().getNombre()+" nombre guardado").show();
+        editor.putInt("ContadorUsuario", mSingletonFII.getUsuario().getContador());
+        editor.putString("CodigoUsuario", mSingletonFII.getUsuario().getCodigo());
+        editor.apply();
         // Reading from SharedPreferences
         String value = settings.getString("key", "");
-
+        CrearUsuario();
         //Guardar en el SharePreferences Datos Usuario Sí - Datos Cursos No
 
         //Guardar en el Firebase
 
         PasarACursos();
+    }
+
+    private void CrearUsuario(){
+
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference myRef = database.getReference("usuarios").child(mSingletonFII.getUsuario().getCodigo());
+        myRef.setValue(mSingletonFII.getUsuario()).addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+
+            }
+        });
+
     }
 
     private void PasarACursos() {

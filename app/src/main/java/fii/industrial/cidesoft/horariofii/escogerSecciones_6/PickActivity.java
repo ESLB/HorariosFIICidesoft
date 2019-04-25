@@ -1,5 +1,6 @@
 package fii.industrial.cidesoft.horariofii.escogerSecciones_6;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -20,6 +21,7 @@ import java.util.ArrayList;
 
 import es.dmoral.toasty.Toasty;
 import fii.industrial.cidesoft.horariofii.R;
+import fii.industrial.cidesoft.horariofii.escogerCiclo_5.CiclesAct;
 import fii.industrial.cidesoft.horariofii.model.Curso;
 import fii.industrial.cidesoft.horariofii.model.Horario;
 import fii.industrial.cidesoft.horariofii.model.SingletonFII;
@@ -90,6 +92,13 @@ public class PickActivity extends AppCompatActivity {
 //
 //            }
 //        });
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent i = new Intent(this, CiclesAct.class);
+        startActivity(i);
     }
 
     private void MostrarInformacion(){
