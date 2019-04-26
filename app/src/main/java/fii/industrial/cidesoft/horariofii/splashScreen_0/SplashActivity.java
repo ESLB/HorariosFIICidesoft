@@ -85,7 +85,8 @@ public class SplashActivity extends AppCompatActivity {
         SharedPreferences sharedPref = getApplicationContext().getSharedPreferences(SingletonFII.SHARED_PREFERENCES, Context.MODE_PRIVATE);
         String indexes = sharedPref.getString("Indexes", "");
         indexes = indexes.substring(1, indexes.length()-1);
-        String[] indexesNew = indexes.split(",");
+        String[] indexesNew = indexes.split(", ");
+        Toasty.info(this,indexesNew.toString()).show();
         ArrayList<String> indexesNew1 = new ArrayList<String>();
         indexesNew1.addAll(Arrays.asList(indexesNew));
         Toasty.info(this,"indexes " + indexesNew1.toString()).show();

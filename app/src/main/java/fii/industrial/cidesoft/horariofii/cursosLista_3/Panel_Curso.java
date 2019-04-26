@@ -57,26 +57,8 @@ public class Panel_Curso extends AppCompatActivity {
         SharedPreferences sharedPref = this.getPreferences(Context.MODE_PRIVATE);
         //String var = sharedPref.getString("CODIGO", "N");
         //Toasty.success(this, "Se llamo " + var).show();
-
         mSingletonFII = SingletonFII.getSingletonFII(getApplicationContext());
-        if(mSingletonFII.getUsuario()!=null) {
-            FirebaseDatabase database = FirebaseDatabase.getInstance();
-            final DatabaseReference myRef = database.getReference("usuarios").child(mSingletonFII.getUsuario().getCodigo());
 
-            /*myRef.addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                    Usuario usuario = dataSnapshot.getValue(Usuario.class);
-                    //Login correcto
-
-                }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                }
-            });*/
-        }
         mRecyclerView = (RecyclerView) findViewById(R.id.id_recyclerviewcursos);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
         mAdapter = new RecyclerAdapter(datos);
@@ -93,11 +75,9 @@ public class Panel_Curso extends AppCompatActivity {
     }
 
     private void closeSession() {
-
         SharedPreferences sharedPref = getApplicationContext().getSharedPreferences("HF", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();
         editor.remove("CODIGO");
-
         String var = sharedPref.getString("CODIGO", "SE ELIMINO");
         //Toasty.success(this, "Se llamo " + var).show();
         editor.clear();
@@ -111,7 +91,6 @@ public class Panel_Curso extends AppCompatActivity {
         //Primera llama al bucle recursivo
         Toasty.info(this, mSingletonFII.getIndexes().toString()).show();
         getHorarios(mSingletonFII.getIndexes());
-
         //Ignoremos esto
         /*if(mSingletonFII.NeedExcecuteForLoop()){
             setForLoop();
@@ -120,20 +99,21 @@ public class Panel_Curso extends AppCompatActivity {
     }
 
     private void getHorarios(final ArrayList<String> indexes) {
+        Toasty.info(this, indexes.toString() + "llamado dentro de GetHorarios").show();
         String dato = indexes.get(0);
         String lugar = dato.split("-")[0];
         final String seccion = dato.split("-")[1];
+        //Toasty.info(Panel_Curso.this, "Lugar " + lugar + " seccion " + seccion).show();
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         final DatabaseReference myRef = database.getReference();
-        //Toasty.info(Panel_Curso.this, "Lugar " + lugar + " seccion " + seccion).show();
+        Toasty.info(this, indexes.toString() + "llamado dentro de GetHorarios lugar "+lugar).show();
         myRef.child("cursos").child(lugar)
             .addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                     Horario horario;
-
                     horario = dataSnapshot.getValue(Horario.class);
-                    if(horario!=null    )
+                    if(horario!=null)
                     {
                         horario.setSeccion(Integer.valueOf(seccion));
                         mHorariosEscogidos.add(horario);
@@ -142,11 +122,10 @@ public class Panel_Curso extends AppCompatActivity {
                         indexes.remove(0);
                         if(indexes.size()>0){
                             getHorarios(indexes);
+                        } else {
+                            generarHorarios();
                         }
                     }
-
-
-
                 }
                 @Override
                 public void onCancelled(@NonNull DatabaseError databaseError) {
@@ -188,36 +167,6 @@ public class Panel_Curso extends AppCompatActivity {
 
     private void generarHorarios() {
         //Cambiar totalmente el método , no sirve así
-        
-
-        //
-        int pos = 0;
-        boolean erase = false;
-        int cont = 0;
-        for(Horario horario : mHorariosEscogidos){
-            if(horario.getId_curso().equals(mHorariosEscogidos.get(mHorariosEscogidos.size()-1).getId_curso())){
-                cont++;
-            }
-        }
-
-        if(cont>1) {
-            Horario horario1 = mHorariosEscogidos.get(mHorariosEscogidos.size() - 1);
-            mHorariosEscogidos.remove(mHorariosEscogidos.size() - 1);
-            if (mHorariosEscogidos.size() > 2) {
-                for (Horario horario : mHorariosEscogidos) {
-                    if (horario.getId_curso().equals(horario1.getId_curso())) {
-                        if (mHorariosEscogidos.indexOf(horario) != mHorariosEscogidos.size() - 1)
-                            pos = mHorariosEscogidos.indexOf(horario);
-                        erase = true;
-                    }
-                }
-
-                if (erase) {
-                    mHorariosEscogidos.add(pos, horario1);
-                    mHorariosEscogidos.remove(pos + 1);
-                }
-            }
-        }
         datos.clear();
         for(Horario horario: mHorariosEscogidos){
             int i = horario.getSeccion();
